@@ -1,1 +1,42 @@
-#Assignemnt2 
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+\begin{document}
+\begin{enumerate}
+\item Problem 1...
+\item 
+Our pseudo-code will include 2 auxiliary functions $height(u)$ and $radius(u)$. $height(u)$ returns the height of the node $u$.$radius(u)$ returns the height of the node u.\\
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt}
+\begin{lstlisting}[language=Python]
+2_Balanced(u): 
+    if if u.right = NIL and u.left = NIL
+        return True
+    elif u.right = NIL 
+        return height(u) <= 2*radius(u) and 2_Balanced(u.left)
+    elif u.left = NIL
+        return height(u) <= 2*radius(u) and 2_Balanced(u.right)
+    else
+        balanced_children = 2_Balanced(u.right) and 2_Balanced(u.left)
+        return height(u) <= 2*radius(u) and balanced_children
+height(u):
+    if u.right = NIL and u.left = NIL
+        return 0
+    elif u.right = NIL 
+        return height(u.left) + 1
+    elif u.left = NIL
+        return height(u.right) + 1
+    else
+        return max[height(u.right), height(u.left)] + 1
+radius(u):
+    if u.right = NIL and u.left = NIL
+        return 0
+    elif u.right = NIL 
+        return radius(u.left) + 1
+    elif u.left = NIL
+        return radius(u.right) + 1
+    else
+        return min[radius(u.right), radius(u.left)] + 1
+\end{lstlisting}
+\end{enumerate}
+\end{document}
