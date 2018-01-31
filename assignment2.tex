@@ -4,9 +4,23 @@
 
 \begin{document}
 \begin{enumerate}
-\item Problem 1...
 \item 
-Our pseudo-code will include 2 auxiliary functions $height(u)$ and $radius(u)$. $height(u)$ returns the height of the node $u$.$radius(u)$ returns the height of the node u.\\
+    \begin{enumerate}
+        \item For a given binomial tree with $m$ nodes, there are $m-1$ edges (taken from the results from the previous courses). In other words, every node except for the root of the tree has one edge. The number of $1$'s in the binary representation of $n$ equals the number of binomial trees that are in a binomial heap with $n$ nodes (mentioned in lecture). Then $\alpha(n)$, the number of $1$'s in the binary representation of $n$, is the number of roots of the binomial trees in the binomial heap. Thus $n-\alpha(n)$ is the number of edges in the binomial.
+        \item When inserting an element in the binomial heap, $H$, the procedure first creates a binomial tree of degree 0 that contains only the element that is being inserted. Then the procedure merges two binomial trees compares the keys and creates an edge number of times. Let's assume the procedure takes constant time $c$ to create the binomial tree and constant time $d$ each time it compares keys and creates an edge.
+        \\Then the total time the procedure takes to insert an element to $H$ is $$T(1) = d\cdot m + c$$ where $m$ is the number of extra edges that have been created as a result.
+        \\ From (a), the number of edges that are in a binomial heap with $n$ nodes is $n - \alpha(n)$. Then inserting $k$ items consecutively will create 
+        $$(n + 1 -\alpha(n+1) - n + \alpha(n)) + (n + 2 -\alpha(n+2) - n - 1 + \alpha(n + 1)) \dots+$$ 
+        $$\dots+(n + k -\alpha(n+k) - n - k + 1 + \alpha(n + k - 1))=$$
+        $$ (1 -\alpha(n+1) + \alpha(n)) + (1 -\alpha(n+2) + \alpha(n + 1)) \dots + (1 -\alpha(n+k) + \alpha(n+k-1))=$$
+        $$k + \alpha(n) - \alpha(n+k)$$
+        extra edges.
+        \\Thus $T(k) = d \cdot (k + \alpha(n) - \alpha(n+k)) + k \cdot c$
+        \\Then the average cost of insertion is $$\frac{T(k)}{k} = d + c + \frac{d}{k}\cdot(\alpha(n) - \alpha(n+k))$$
+        \\ Note that $\alpha(n)$ is bounded above by $\left \lfloor{\log n}\right \rfloor + 1$ and $ k > \log n$ ,thus \\$$\frac{(\alpha(n) - \alpha(n+k)}{k}\ge\frac{(\alpha(n) - \alpha(n+k)}{k}$$
+    \end{enumerate}
+\item 
+Our pseudo-code will include 2 auxiliary procedures $height(u)$ and $radius(u)$. $height(u)$ returns the height of the node $u$.$radius(u)$ returns the height of the node u.\\
 \lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt}
 \begin{lstlisting}[language=Python]
 2_Balanced(u): 
