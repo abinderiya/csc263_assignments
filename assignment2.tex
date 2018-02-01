@@ -7,18 +7,17 @@
 \item 
     \begin{enumerate}
         \item For a given binomial tree with $m$ nodes, there are $m-1$ edges (taken from the results from the previous courses). In other words, every node except for the root of the tree has one edge. The number of $1$'s in the binary representation of $n$ equals the number of binomial trees that are in a binomial heap with $n$ nodes (mentioned in lecture). Then $\alpha(n)$, the number of $1$'s in the binary representation of $n$, is the number of roots of the binomial trees in the binomial heap. Thus $n-\alpha(n)$ is the number of edges in the binomial.
-        \item When inserting an element in the binomial heap, $H$, the procedure first creates a binomial tree of degree 0 that contains only the element that is being inserted. Then the procedure merges two binomial trees compares the keys and creates an edge number of times to complete the insertion. Let's assume the procedure takes constant time $c$ to create the binomial tree and constant time $d$ each time it compares keys and creates an edge.
+        \item When inserting an element in the binomial heap, $H$, the procedure first creates a binomial tree of degree 0 that contains only the element that is being inserted. Then the procedure merges two binomial trees compares the keys and creates an edge number of times. Let's assume the procedure takes constant time $c$ to create the binomial tree and constant time $d$ each time it compares keys and creates an edge.
         \\Then the total time the procedure takes to insert an element to $H$ is $$T(1) = d\cdot m + c$$ where $m$ is the number of extra edges that have been created as a result.
-        \\ From (a), the number of edges that are in a binomial heap with $n$ nodes is $n - \alpha(n)$, where $\alpha(n)$ is the number of $1$'s in the binary representation of $n$. Then inserting $k$ items consecutively will create 
+        \\ From (a), the number of edges that are in a binomial heap with $n$ nodes is $n - \alpha(n)$. Then inserting $k$ items consecutively will create 
         $$(n + 1 -\alpha(n+1) - n + \alpha(n)) + (n + 2 -\alpha(n+2) - n - 1 + \alpha(n + 1)) \dots+$$ 
         $$\dots+(n + k -\alpha(n+k) - n - k + 1 + \alpha(n + k - 1))=$$
         $$ (1 -\alpha(n+1) + \alpha(n)) + (1 -\alpha(n+2) + \alpha(n + 1)) \dots + (1 -\alpha(n+k) + \alpha(n+k-1))=$$
         $$k + \alpha(n) - \alpha(n+k)$$
         extra edges.
         \\Thus $T(k) = d \cdot (k + \alpha(n) - \alpha(n+k)) + k \cdot c$
-        \\Then the average cost of insertion is $$\frac{T(k)}{k} = d + c + \frac{d}{k}\cdot(\alpha(n) - \alpha(n+k))\le d + c + \frac{d}{k}\cdot \alpha(n) $$
-        \\ Note that $ k > \log n$ ,thus \\$$\frac{T(k)}{k} = d + c + \frac{d}{k}\cdot \alpha(n) \le d + c + \frac{d}{\log n}\cdot \alpha(n) $$
-        Notice now that $\frac{T(k)}{k}$ is bounded above by a constant  $d + c + \frac{d}{\log n}\cdot \alpha(n)$
+        \\Then the average cost of insertion is $$\frac{T(k)}{k} = d + c + \frac{d}{k}\cdot(\alpha(n) - \alpha(n+k))$$
+        \\ Note that $\alpha(n)$ is bounded above by $\left \lfloor{\log n}\right \rfloor + 1$ and $ k > \log n$ ,thus \\$$\frac{(\alpha(n) - \alpha(n+k)}{k}\ge\frac{(\alpha(n) - \alpha(n+k)}{k}$$
     \end{enumerate}
 \item 
 Our pseudo-code will include 2 auxiliary procedures $height(u)$ and $radius(u)$. $height(u)$ returns the height of the node $u$.$radius(u)$ returns the height of the node u.\\
@@ -54,4 +53,12 @@ radius(u):
         return min[radius(u.right), radius(u.left)] + 1
 \end{lstlisting}
 \end{enumerate}
+Both the functions radius(u) and height(u) share many similarities. The if statements on line 12 and 21 are constant and only get executed if there is 1 node in $u$, i.e n = 1 (constant). We are only concerned with n being very large though. The elif statements on line 14, 16, 23, 25 only get executed when the BST at u resembles a linked list. Thus it will take $n$ operations until the algorithm reaches the leaf, i.e it has a runtime of $n$. In the last conditional statements on lines 18 and 27, we are traversing over the entire left and right subtrees again, which in total has a runtime of $n$.\\
+The elif statement in the 2-Balanced function on lines 4 and 6 will only execute if one child of u is NIL. Since one child does not exist, the radius of u must be $1$. Therefore, for height(u) $\le$ 2*radius(u) to be true, we require height to be at most $2$. Meaning that the recursive step over the non-NIL child will be constant time every time. Since both elif statements call heigh(u) and radius(u) which are both $\Theta(n)$, the worst case runtime for the entire elif statement is also  $\Theta(n)$. Finally, the else statement on line 8, will check both the left and right subtree for whether it is 2-Balanced. This else conditional will have a runtime of $\Theta(n)$ too because if in its recursive state it never satisfies either elif statement on line 4 or 6, and only satisfies the if statement on line 2 and else on line 8 it will take exactly n iterations, thus it is in $\Theta(n)$. If however it reaches the elif statement, then the algorithm is also in $\Theta(n)$ as we've shown above. Since in every possible case, 2-Balanced(u) has worst-case runtime $\Theta(n)$, the algorithm has worst-case runtime $\Theta(n)$.
+
+
+
+
+
+
 \end{document}
